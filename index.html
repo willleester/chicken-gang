@@ -24,6 +24,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{background:var(--cream)}
 body{margin:0;color:var(--ink);font-family:var(--f-en),var(--f-zh);font-size:16px;line-height:1.65;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--ink)}
@@ -336,7 +337,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
 @media (max-width:640px){
   /* Phone: a sheet that stops above the button, so the page and the 收起 button stay visible */
   .chat{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto;
-    bottom:calc(76px + env(safe-area-inset-bottom,0px));height:min(68vh,calc(100vh - 170px));height:min(68dvh,calc(100dvh - 170px));
+    bottom:calc(76px + env(safe-area-inset-bottom,0px));height:min(60vh,calc(100vh - 170px));height:min(60dvh,calc(100dvh - 170px));
     border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
   .chat-head{grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:10px 12px}
   .chat-head .status{display:none}
