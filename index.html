@@ -328,15 +328,25 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
 .chips-row button{background:none;border:1px solid #555;color:var(--cream);border-radius:999px;padding:4px 10px;font-family:var(--f-zh);font-size:13px;cursor:pointer}
 .chips-row button:hover,.chips-row button:focus-visible{border-color:var(--yolk);color:var(--yolk);outline:none}
 .chat-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:12px 14px 14px;border-top:1px solid #3A3A3A}
-.chat-form textarea{resize:none;height:46px;max-height:120px;background:#262626;color:var(--cream);border:1px solid #444;border-radius:14px;padding:11px 14px;font-family:var(--f-zh);font-size:15px;line-height:1.4}
+.chat-form textarea{resize:none;height:46px;max-height:120px;background:#262626;color:var(--cream);border:1px solid #444;border-radius:14px;padding:11px 14px;font-family:var(--f-zh);font-size:16px;line-height:1.4}
 .chat-form textarea:focus{outline:2px solid var(--yolk);outline-offset:0;border-color:transparent}
 .chat-form button{background:var(--yolk);color:var(--ink);border:0;border-radius:14px;padding:0 16px;font-family:var(--f-zh);font-weight:900;font-size:15px;cursor:pointer}
 .chat-form button:disabled{opacity:.45;cursor:not-allowed}
 .chat-meta{grid-column:1 / -1;display:flex;justify-content:space-between;font-family:var(--f-zh);font-size:11px;color:#9A9384}
 @media (max-width:640px){
-  .chat{right:0;left:0;bottom:0;width:100%;height:calc(100% - env(safe-area-inset-top,0px) - 56px);border-radius:22px 22px 0 0;box-shadow:none;padding-bottom:env(safe-area-inset-bottom,0px)}
-  .chat-fab span.txt{display:none}
-  .chat-fab{padding:6px}
+  /* Phone: a sheet that stops above the button, so the page and the 收起 button stay visible */
+  .chat{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto;
+    bottom:calc(76px + env(safe-area-inset-bottom,0px));height:min(68vh,calc(100vh - 170px));height:min(68dvh,calc(100dvh - 170px));
+    border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+  .chat-head{grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:10px 12px}
+  .chat-head .status{display:none}
+  .chat-head .av{width:40px;height:40px;border-radius:12px}
+  .chat-head .av img{width:32px;height:32px}
+  .chat-head small{font-size:10px}
+  .chat-x{width:44px;height:44px;font-size:24px;background:#333;border-radius:12px}
+  .chat-log{padding:12px}
+  .chat-form{padding:10px 12px 12px}
+  .chat-meta span:last-child{display:none}
 }
 
 /* ---------- Responsive ---------- */
@@ -900,7 +910,8 @@ function openChat() {
     addChips(["雞幫最近有什麼活動？", "這個月爐主是誰？", "KC 的虎爺有用嗎？"]);
   }
   quotaShow();
-  chat.input.focus();
+  // Only jump into the text box on mouse devices; on phones that would pop the keyboard over the sheet
+  if (matchMedia("(hover: hover)").matches) chat.input.focus();
 }
 function closeChat(refocus = true) {
   chat.box.hidden = true; chat.fab.setAttribute("aria-expanded", "false"); chat.fabTxt.textContent = "問雞婆 GPT";
