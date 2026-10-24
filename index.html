@@ -235,6 +235,31 @@ dialog::backdrop{background:rgba(23,23,23,.72)}
 .album img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border:2px solid var(--ink)}
 .album figcaption{font-family:var(--f-zh);font-size:12px;color:var(--ink-60);margin-top:4px}
 
+/* ---------- Calendar: hosts & birthdays ---------- */
+.nextup{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:var(--ink);color:var(--cream);border:var(--rule);padding:18px 22px;margin-bottom:22px}
+.nextup img{width:96px;height:96px;object-fit:cover;object-position:50% 18%;border-radius:50%;border:3px solid var(--yolk)}
+.nextup .who{font-family:var(--f-head);font-size:clamp(34px,5vw,60px);line-height:.95;text-transform:uppercase;min-width:0}
+.nextup .who small{display:block;font-family:var(--f-zh);font-weight:700;font-size:15px;color:var(--yolk);text-transform:none;margin-bottom:4px}
+.nextup .count{text-align:center;font-family:var(--f-head);font-size:clamp(48px,7vw,88px);line-height:.85;color:var(--lime)}
+.nextup .count small{display:block;font-family:var(--f-en);font-weight:700;font-size:12px;letter-spacing:.16em;color:var(--cream)}
+.nextup.today{background:var(--blood)}
+.nextup.today .count{color:var(--yolk)}
+.cal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.month{position:relative;border:var(--rule);background:var(--paper);padding:14px 16px 16px;display:grid;gap:10px;align-content:start;min-width:0}
+.month .mh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.month .mh b{font-family:var(--f-head);font-weight:400;font-size:40px;line-height:1}
+.month .mh span{font-weight:700;font-size:13px;letter-spacing:.1em}
+.month .host{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--f-zh);font-weight:900;font-size:17px}
+.month .host .label{font-size:10px;background:var(--ink);color:var(--yolk);padding:1px 6px}
+.month ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.month li{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;align-items:center;font-family:var(--f-zh);font-weight:700;font-size:15px}
+.month li img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:50% 18%;border:2px solid var(--ink)}
+.month li time{font-family:var(--f-en);font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.month .none{font-family:var(--f-zh);font-size:13px;color:var(--ink-60)}
+.month.past{opacity:.5}
+.month.now{background:var(--yolk);transform:rotate(-1deg);box-shadow:6px 6px 0 var(--ink)}
+.month.now::after{content:"NOW";position:absolute;top:-12px;right:12px;background:var(--blood);color:var(--cream);font-family:var(--f-head);font-size:16px;padding:0 8px;border:2px solid var(--ink)}
+
 /* ---------- Merch placeholder ---------- */
 .merch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .item{border:var(--rule);background:var(--paper);display:grid;grid-template-rows:auto 1fr;min-width:0}
@@ -268,6 +293,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
   .issue .cover,.issue .story,.issue .side,.issue.flip .cover,.issue.flip .story,.issue.flip .side{grid-column:1;grid-row:auto}
   .issue .side{max-width:360px;justify-self:end}
   .merch{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cal{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:640px){
   .bar nav{display:none}
@@ -283,6 +309,9 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
   .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .dossier .row{grid-template-columns:minmax(0,1fr);gap:2px}
   .dlg-body{padding:16px}
+  .nextup{grid-template-columns:auto minmax(0,1fr);gap:14px}
+  .nextup .count{grid-column:1 / -1;text-align:left}
+  .nextup img{width:72px;height:72px}
   .rules{transform:none}
   footer .wrap{grid-template-columns:minmax(0,1fr)}
 }
@@ -298,6 +327,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
       <a href="#crew">幫友檔案</a>
       <a href="#daily">雞幫日常</a>
       <a href="#missions">雞幫出任務</a>
+      <a href="#calendar">爐主月曆</a>
       <a href="#merch">雞幫周邊</a>
     </nav>
   </div>
@@ -400,9 +430,19 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
     <div class="mgrid" id="mgrid"></div>
   </section>
 
-  <section class="wrap sec" id="merch">
+  <section class="wrap sec" id="calendar">
     <div class="sec-head">
       <span class="no">05</span>
+      <h2>The Calendar<small>爐主＆壽星月曆</small></h2>
+      <p>2026 年 7 月到 2027 年 6 月，每個月的爐主和壽星。目前月份會自動標出來。</p>
+    </div>
+    <div class="nextup" id="nextup"></div>
+    <div class="cal" id="cal"></div>
+  </section>
+
+  <section class="wrap sec" id="merch">
+    <div class="sec-head">
+      <span class="no">06</span>
       <h2>Merch<small>雞幫周邊</small></h2>
       <p>版型先做好，等有周邊再上架。以下品項都是示意，不是真的商品。</p>
     </div>
@@ -438,31 +478,31 @@ const DATA = {
     { t: "有人出國，就辦小吃趴", s: "2025 國藩哥餞行，食神菜單上桌" }
   ],
   members: [
-    { name: "國藩哥", photo: "p01.jpg", nickname: TBD, role: "溫柔暖男", bio: "雞幫的溫柔暖男，女生緣很好。五週年影片裡負責「資金調度」。",
+    { name: "國藩哥", birthday: "10-19", photo: "p01.jpg", nickname: TBD, role: "溫柔暖男", bio: "雞幫的溫柔暖男，女生緣很好。五週年影片裡負責「資金調度」。",
       facts: ["2025 年 3 月移居美國鳳凰城，雞幫在晶華酒店幫他辦台灣小吃歡送趴，還送了一組茶杯和一座獎盃。", "食神菜單：帶美金 80 萬就好。"] },
-    { name: "Owen", photo: "p02.jpg", nickname: "歐文", role: "玩樂達人", bio: "雞幫的玩樂達人。",
+    { name: "Owen", birthday: "11-20", photo: "p02.jpg", nickname: "歐文", role: "玩樂達人", bio: "雞幫的玩樂達人。",
       facts: ["2024 年把論文寫完了，影片字幕說：「人的潛力是無窮的。」", "食神菜單：鹹酥雞。"] },
-    { name: "Jackie", photo: "p03.jpg", nickname: TBD, role: "時尚精品女王", bio: "雞幫的時尚精品女王。",
+    { name: "Jackie", birthday: "11-30", photo: "p03.jpg", nickname: TBD, role: "時尚精品女王", bio: "雞幫的時尚精品女王。",
       facts: ["YouTube 上的「110A 上課系列」影片標題寫著她的名字。", "食神菜單：魷魚羹。"] },
-    { name: "Grace", photo: "p04.jpg", nickname: TBD, role: "電視台台長", bio: "電視台台長，雞幫裡負責聯絡和溝通的人。",
+    { name: "Grace", birthday: "08-25", photo: "p04.jpg", nickname: TBD, role: "電視台台長", bio: "電視台台長，雞幫裡負責聯絡和溝通的人。",
       facts: ["食神菜單：魯味。"] },
-    { name: "Will", photo: "p05.jpg", nickname: TBD, role: "暖男・跑步社社長", bio: "暖男，臺大 EMBA 門外社（跑步社）社長。",
+    { name: "Will", birthday: "03-08", photo: "p05.jpg", nickname: TBD, role: "暖男・跑步社社長", bio: "暖男，臺大 EMBA 門外社（跑步社）社長。",
       facts: ["2026 年東京 WBC 遠征的行程手冊由他整理。", "食神菜單：烤鴨。"] },
-    { name: "Sten", photo: "p06.jpg", lead: true, nickname: "隊長", role: "雞幫隊長・精神領袖", bio: "雞幫隊長，大家公認的精神領袖。",
+    { name: "Sten", birthday: "10-27", photo: "p06.jpg", lead: true, nickname: "隊長", role: "雞幫隊長・精神領袖", bio: "雞幫隊長，大家公認的精神領袖。",
       facts: ["五週年影片裡的「首席策劃官」。", "2026 年東京 WBC 遠征時，在機場拿著一瓶「紅茶花伝」幫中華隊集氣。", "食神菜單：阿圖麻油雞。"] },
-    { name: "Frank", photo: "p07.jpg", nickname: TBD, role: "年輕有為的董事長", bio: "年輕有為的董事長。",
+    { name: "Frank", birthday: "04-27", photo: "p07.jpg", nickname: TBD, role: "年輕有為的董事長", bio: "年輕有為的董事長。",
       facts: ["2021 年籃球賽一直是全場 MVP。影片字幕：「不知道是實力真的太強，還是對手都太弱。」", "食神菜單：阿圖麻油雞（第二份）。"] },
-    { name: "家誠", photo: "p08.jpg", nickname: "Klein", role: "萬能工具人", bio: "雞幫的萬能工具人，什麼都會、什麼都幫。",
+    { name: "家誠", birthday: "11-27", photo: "p08.jpg", nickname: "Klein", role: "萬能工具人", bio: "雞幫的萬能工具人，什麼都會、什麼都幫。",
       facts: ["雞幫小旅行的行程說明，通常是他在群組發布。", "食神菜單：鹹水雞＋烏魚子。"] },
-    { name: "Fiona", photo: "p09.jpg", nickname: TBD, role: "萬能甜美美少女", bio: "萬能甜美美少女，和 MK 是雞幫的神鵰俠侶。",
+    { name: "Fiona", birthday: "05-03", photo: "p09.jpg", nickname: TBD, role: "萬能甜美美少女", bio: "萬能甜美美少女，和 MK 是雞幫的神鵰俠侶。",
       facts: ["2026 年 1/10 班聚前，一早先去大溪球場打球。", "食神菜單：寧夏豆花莊。"] },
-    { name: "Garry", photo: "p10.jpg", nickname: TBD, role: "文武雙全的型男", bio: "文武雙全的型男。",
+    { name: "Garry", birthday: "07-04", photo: "p10.jpg", nickname: TBD, role: "文武雙全的型男", bio: "文武雙全的型男。",
       facts: ["雞幫五週年回顧影片的上傳者。", "食神菜單：大碗公滷肉飯＋油庫口蚵仔麵線＋香腸。"] },
-    { name: "文文", photo: "p11.jpg", nickname: "Wen", role: "財務精算專家", bio: "雞幫的財務精算專家。",
+    { name: "文文", birthday: "07-09", photo: "p11.jpg", nickname: "Wen", role: "財務精算專家", bio: "雞幫的財務精算專家。",
       facts: ["2026 年 1/10 班聚前，一早先去大溪球場打球。", "食神菜單：涼麵＋粽子。"] },
-    { name: "MK", photo: "p12.jpg", nickname: TBD, role: "聰明的資料科學家", bio: "很聰明的資料科學家，和 Fiona 是雞幫的神鵰俠侶。",
+    { name: "MK", birthday: "03-17", photo: "p12.jpg", nickname: TBD, role: "聰明的資料科學家", bio: "很聰明的資料科學家，和 Fiona 是雞幫的神鵰俠侶。",
       facts: ["食神菜單：塞門甜不辣。"] },
-    { name: "洪龍", photo: "p13.jpg", nickname: "Jason", role: "乳房外科醫師", bio: "乳房外科醫師。",
+    { name: "洪龍", birthday: "06-28", photo: "p13.jpg", nickname: "Jason", role: "乳房外科醫師", bio: "乳房外科醫師。",
       facts: ["食神菜單：「全糖」黑糖珍珠奶茶＋台灣啤酒。"] }
   ],
   issues: [
@@ -522,6 +562,13 @@ const DATA = {
       synopsis: "壘球大聯盟竟然進了前四強，拿下雞幫的第三座季軍獎盃。再次證明：只有奇蹟，沒有累積。",
       cast: TBD, album: [{ src: "trophy.jpg", cap: "第三座季軍獎盃" }, { src: "ball26.jpg", cap: "賽後合照" }] }
   ],
+  // 爐主 per month (2026-07 → 2027-06); names match members[].name
+  hosts: [
+    { ym: "2026-07", who: ["Sten"] }, { ym: "2026-08", who: ["Grace"] }, { ym: "2026-09", who: ["Frank"] },
+    { ym: "2026-10", who: ["國藩哥"] }, { ym: "2026-11", who: ["Garry"] }, { ym: "2026-12", who: ["文文"] },
+    { ym: "2027-01", who: ["家誠"] }, { ym: "2027-02", who: ["Owen", "Jackie"] }, { ym: "2027-03", who: ["MK"] },
+    { ym: "2027-04", who: ["Fiona"] }, { ym: "2027-05", who: ["洪龍"] }, { ym: "2027-06", who: ["Will"] }
+  ],
   merch: [
     { name: "SERIOUSLY UNSERIOUS 帽 T", art: "SERIOUSLY<br>UNSERIOUS" },
     { name: "雞幫幫規托特包", art: "HOUSE<br>RULES" },
@@ -576,6 +623,7 @@ function dossierHTML(i) {
           <div class="row"><dt class="label">本名</dt><dd>${m.realName ? esc(m.realName) : tbd}</dd></div>
           <div class="row"><dt class="label">Alias 綽號</dt><dd>${m.nickname ? esc(m.nickname) : tbd}</dd></div>
           <div class="row"><dt class="label">Role 角色稱號</dt><dd>${esc(m.role)}</dd></div>
+          <div class="row"><dt class="label">Birthday 生日</dt><dd>${m.birthday ? fmtBirthday(m.birthday) : tbd}</dd></div>
           <div class="row"><dt class="label">Famous Line 經典台詞</dt><dd class="quote">${m.quote ? "「" + esc(m.quote) + "」" : tbd}</dd></div>
           <div class="row"><dt class="label">Profile 人物介紹</dt><dd>${esc(m.bio)}<ul>${m.facts.map(f => `<li>${esc(f)}</li>`).join("")}</ul></dd></div>
         </dl>
@@ -640,6 +688,37 @@ function missionHTML(i) {
       </div>
     </div>`;
 }
+
+/* --- Calendar: hosts & birthdays --- */
+const MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+function fmtBirthday(md) { const [m, d] = md.split("-").map(Number); return `${m} 月 ${d} 日`; }
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const ymNow = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+document.getElementById("cal").innerHTML = DATA.hosts.map(h => {
+  const mm = h.ym.slice(5);
+  const bdays = DATA.members.filter(m => m.birthday && m.birthday.startsWith(mm)).sort((a, b) => a.birthday.localeCompare(b.birthday));
+  const state = h.ym === ymNow ? " now" : h.ym < ymNow ? " past" : "";
+  return `<article class="month${state}">
+      <div class="mh"><b>${MON[+mm - 1]}</b><span>${h.ym.slice(0, 4)}</span></div>
+      <div class="host"><span class="label">爐主</span>${h.who.map(esc).join("、")}</div>
+      ${bdays.length ? `<ul>${bdays.map(m => `<li><img src="img/${esc(m.photo)}" alt="" loading="lazy" width="800" height="1200"><span>${esc(m.name)}</span><time>${+m.birthday.slice(0, 2)}/${+m.birthday.slice(3)}</time></li>`).join("")}</ul>` : `<div class="none">這個月沒有壽星</div>`}
+    </article>`;
+}).join("");
+// Next birthday (or today's) with a day countdown
+function nextBirthday(m) {
+  const [mo, d] = m.birthday.split("-").map(Number);
+  let t = new Date(today.getFullYear(), mo - 1, d);
+  if (t < today) t = new Date(today.getFullYear() + 1, mo - 1, d);
+  return { m, days: Math.round((t - today) / 864e5) };
+}
+const upcoming = DATA.members.filter(m => m.birthday).map(nextBirthday).sort((a, b) => a.days - b.days);
+const soon = upcoming.filter(u => u.days === upcoming[0].days);
+const hostNow = DATA.hosts.find(h => h.ym === ymNow);
+const nx = document.getElementById("nextup");
+if (soon[0].days === 0) nx.classList.add("today");
+nx.innerHTML = `<img src="img/${esc(soon[0].m.photo)}" alt="${esc(soon[0].m.name)}" width="800" height="1200">
+  <div class="who"><small>${soon[0].days === 0 ? "今天生日" : "下一位壽星"}${hostNow ? `・本月爐主 ${hostNow.who.map(esc).join("、")}` : ""}</small>${soon.map(u => esc(u.m.name)).join(" ＆ ")}</div>
+  <div class="count">${soon[0].days === 0 ? "TODAY" : soon[0].days}<small>${soon[0].days === 0 ? "生日快樂" : `DAYS TO ${fmtBirthday(soon[0].m.birthday)}`}</small></div>`;
 
 /* --- Merch placeholders --- */
 document.getElementById("merchList").innerHTML = DATA.merch.map(p => `
@@ -708,4 +787,6 @@ document.addEventListener("keydown", e => {
   keys = (keys + e.key).slice(-2);
   if (keys === "13") { toast("13 王牌全員到齊。"); rain("🃏", 13); }
 });
+// Hidden: on someone's birthday the page greets them with cake
+if (soon[0].days === 0) setTimeout(() => { toast(`今天是 ${soon.map(u => u.m.name).join("、")} 的生日！生日快樂`); rain("🎂", 13); }, 800);
 </script>
