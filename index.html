@@ -158,6 +158,19 @@ section{scroll-margin-top:64px}
 @media (hover:none){.poster .role{grid-template-rows:1fr}}
 @container (max-width:240px){.poster .credit span:last-child{display:none}}
 .crew-foot{margin-top:18px;font-family:var(--f-zh);font-size:13px;color:var(--ink-60)}
+.friends-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:56px 0 18px;border-top:var(--rule);padding-top:14px}
+.friends-head b{font-family:var(--f-head);font-weight:400;font-size:clamp(30px,4vw,48px);line-height:1;text-transform:uppercase}
+.friends-head span{font-family:var(--f-zh);font-weight:900;font-size:15px;background:var(--lime);border:2px solid var(--ink);padding:0 8px}
+.friends{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.friend{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:20px;align-items:start;border:var(--rule);background:var(--paper);padding:16px;min-width:0}
+.friend .poster{cursor:default}
+.friend .poster:hover{transform:none;box-shadow:none}
+.friend h3{font-family:var(--f-zh);font-weight:900;font-size:28px;line-height:1.2}
+.friend .who{display:grid;gap:10px;align-content:start;min-width:0}
+.friend p{font-family:var(--f-zh);font-size:15px}
+.friend ul{margin:0;padding-left:1.1em;display:grid;gap:6px;font-family:var(--f-zh);font-size:15px}
+.friend blockquote{margin:0;font-family:var(--f-zh);font-weight:900;font-size:17px;line-height:1.45;background:var(--yolk);border:2px solid var(--ink);padding:10px 12px;transform:rotate(-1deg)}
+.friend blockquote cite{display:block;font-style:normal;font-weight:500;font-size:12px;margin-top:4px}
 
 /* ---------- Dossier / dialog ---------- */
 dialog{width:min(1040px,calc(100% - 24px));max-height:calc(100% - 24px);padding:0;border:var(--rule);background:var(--cream);color:var(--ink);box-shadow:12px 12px 0 var(--ink)}
@@ -294,6 +307,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
   .issue .side{max-width:360px;justify-self:end}
   .merch{grid-template-columns:repeat(2,minmax(0,1fr))}
   .cal{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .friends{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:640px){
   .bar nav{display:none}
@@ -309,6 +323,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
   .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .dossier .row{grid-template-columns:minmax(0,1fr);gap:2px}
   .dlg-body{padding:16px}
+  .friend{grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:14px;padding:12px}
   .nextup{grid-template-columns:auto minmax(0,1fr);gap:14px}
   .nextup .count{grid-column:1 / -1;text-align:left}
   .nextup img{width:72px;height:72px}
@@ -406,6 +421,8 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
     </div>
     <div class="crew-grid" id="crewGrid"></div>
     <p class="crew-foot">編號依 2025 年食神菜單的名單順序，不代表排名。人物照取自 2024 年畢業照；本名和經典台詞還在收集中，先以「待補」標示。</p>
+    <div class="friends-head"><b>Friends of the Gang</b><span>雞幫之友・特別客串</span></div>
+    <div class="friends" id="friends"></div>
   </section>
 
   <section class="wrap sec" id="daily">
@@ -562,6 +579,16 @@ const DATA = {
       synopsis: "壘球大聯盟竟然進了前四強，拿下雞幫的第三座季軍獎盃。再次證明：只有奇蹟，沒有累積。",
       cast: TBD, album: [{ src: "trophy.jpg", cap: "第三座季軍獎盃" }, { src: "ball26.jpg", cap: "賽後合照" }] }
   ],
+  friends: [
+    { name: "詠晴", role: "時尚女神", photo: "f01.jpg", alt: "詠晴的 EMBA 畢業照",
+      bio: "雞幫的時尚女神，走到哪裡都是焦點。雞幫辦什麼活動她都挺，是場邊最強的應援團。臺大 EMBA 112 級學妹。",
+      facts: ["2026 年 6 月 EMBA 畢業，雞幫以「雞幫 敬賀」的名義送花祝賀。"],
+      card: { t: "學分修滿了，畢業證書拿到了。但雞幫的聚餐、嘴砲和友情，是沒有畢業證書的必修課！", c: "雞幫送給詠晴的畢業花卡，2026" } },
+    { name: "KC", role: "賭神", photo: "f02.jpg", alt: "KC 在小吃店開紅酒",
+      bio: "雞幫聚會的開心果兼包打聽，雞幫大小事問他最清楚。每次聚會都請出虎爺坐鎮，誓言這次一定贏錢，結果常常輸得比上次還多。",
+      facts: ["隨身法寶：虎爺。", "戰績：輸多贏少，笑聲全包。"],
+      card: { t: "虎爺在手，輸贏隨緣。", c: "雞幫給賭神的評語" } }
+  ],
   // 爐主 per month (2026-07 → 2027-06); names match members[].name
   hosts: [
     { ym: "2026-07", who: ["Sten"] }, { ym: "2026-08", who: ["Grace"] }, { ym: "2026-09", who: ["Frank"] },
@@ -589,28 +616,41 @@ document.getElementById("rules").innerHTML = DATA.rules.map(r => `<li><span>${es
 document.getElementById("faces").innerHTML = DATA.members.map((m, i) => `<i title="${esc(m.name)}">${pad(i + 1)}</i>`).join("");
 
 /* --- Character poster component --- */
-function posterHTML(m, i, tag) {
+function posterHTML(m, i, tag, opt = {}) {
   const accent = ACCENTS[i % 3];
   const nameCls = isLatin(m.name) ? (m.name.length <= 4 ? "l" : m.name.length <= 6 ? "m" : "s") : "zh";
   const shot = m.photo
-    ? `<img src="img/${esc(m.photo)}" alt="${esc(m.name)} 畢業照" loading="lazy" width="800" height="1200">`
+    ? `<img src="img/${esc(m.photo)}" alt="${esc(m.alt || m.name + " 畢業照")}" loading="lazy" width="800" height="1200">`
     : `<svg class="silhouette" viewBox="0 0 100 120" aria-hidden="true"><circle cx="50" cy="34" r="22"/><path d="M8 120c0-30 18-52 42-52s42 22 42 52z"/></svg><span class="ph-note">人物照待補</span>`;
   const attrs = tag === "button"
     ? `type="button" data-member="${i}" aria-label="${esc(m.name)}，${esc(m.role)}，打開幫友檔案"`
     : `aria-label="${esc(m.name)} 角色海報"`;
   return `<${tag} class="poster${tag === "div" ? " open" : ""}${tag === "button" && m.lead ? " lead" : ""}" style="--accent:${accent}" ${attrs}>
       <span class="shot">${shot}</span>
-      <span class="credit"><span>CHICKEN GANG PRESENTS</span><span>EST. 2021</span></span>
-      <span class="rank" aria-hidden="true">${pad(i + 1)}</span>
+      <span class="credit"><span>${opt.credit || "CHICKEN GANG PRESENTS"}</span><span>EST. 2021</span></span>
+      <span class="rank" aria-hidden="true">${opt.rank || pad(i + 1)}</span>
       <span class="bill">
         ${m.nickname ? `<span class="nick">「${esc(m.nickname)}」</span>` : ""}
         <span class="name ${nameCls}">${esc(m.name)}</span>
-        <span class="role"><span><b>${esc(m.role)}</b></span></span>
-        <span class="fine">A NTU EMBA 110A PRODUCTION · STARRING ${esc(m.name.toUpperCase())} · SERIOUSLY UNSERIOUS PICTURES</span>
+        <span class="role"><span><b>${esc(m.role || "雞幫之友")}</b></span></span>
+        <span class="fine">${opt.guest ? "SPECIAL GUEST APPEARANCE · " : "A NTU EMBA 110A PRODUCTION · "}STARRING ${esc(m.name.toUpperCase())} · SERIOUSLY UNSERIOUS PICTURES</span>
       </span>
     </${tag}>`;
 }
 document.getElementById("crewGrid").innerHTML = DATA.members.map((m, i) => posterHTML(m, i, "button")).join("");
+
+document.getElementById("friends").innerHTML = DATA.friends.map((f, i) => `
+  <article class="friend">
+    ${posterHTML(f, i, "div", { rank: "★", credit: "SPECIAL GUEST", guest: true })}
+    <div class="who">
+      <span class="label">Friend of the Gang</span>
+      <h3>${esc(f.name)}</h3>
+      <div><span class="label">Role 角色</span><br>${f.role ? esc(f.role) : tbd}</div>
+      <p>${f.bio ? esc(f.bio) : tbd}</p>
+      ${f.facts.length ? `<ul>${f.facts.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+      ${f.card ? `<blockquote>「${esc(f.card.t)}」<cite>${esc(f.card.c)}</cite></blockquote>` : ""}
+    </div>
+  </article>`).join("");
 
 function dossierHTML(i) {
   const m = DATA.members[i];
