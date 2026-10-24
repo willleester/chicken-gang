@@ -302,6 +302,43 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
 .drop{position:fixed;top:-60px;z-index:29;font-size:34px;pointer-events:none}
 @media (prefers-reduced-motion:no-preference){.drop{animation:fall 1.8s linear forwards}@keyframes fall{to{transform:translateY(115vh) rotate(540deg)}}}
 
+/* ---------- 雞婆 GPT chat widget ---------- */
+.chat-fab{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:25;display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);border:3px solid var(--yolk);border-radius:999px;padding:6px 16px 6px 6px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);font-family:var(--f-zh);font-weight:900;font-size:15px;transition:transform .2s var(--ease)}
+.chat-fab:hover,.chat-fab:focus-visible{transform:translateY(-3px) rotate(-2deg);outline:none}
+.chat-fab img{width:40px;height:40px;border-radius:50%;background:var(--yolk)}
+.chat-fab .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(198,243,107,.25)}
+.chat{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:26;width:min(380px,calc(100% - 36px));height:min(560px,calc(100% - 120px));display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:#1F1F1F;color:var(--cream);border:3px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--yolk);overflow:hidden}
+.chat-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid #3A3A3A}
+.chat-head .av{width:48px;height:48px;border-radius:14px;background:var(--yolk);display:grid;place-items:center}
+.chat-head .av img{width:40px;height:40px;border-radius:50%}
+.chat-head b{display:block;font-family:var(--f-zh);font-weight:900;font-size:19px;line-height:1.2}
+.chat-head small{display:block;font-family:var(--f-en);font-weight:700;font-size:11px;letter-spacing:.06em;color:var(--yolk)}
+.chat-head .status{font-family:var(--f-en);font-weight:700;font-size:11px;letter-spacing:.08em;color:var(--lime);background:rgba(198,243,107,.12);border-radius:999px;padding:3px 9px}
+.chat-head .status.off{color:#BDB6A8;background:rgba(245,240,230,.08)}
+.chat-x{background:none;border:0;color:var(--cream);font-size:22px;line-height:1;cursor:pointer;padding:4px 6px;border-radius:8px}
+.chat-x:hover,.chat-x:focus-visible{background:#333;outline:none}
+.chat-log{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}
+.msg{max-width:88%;padding:12px 14px;border-radius:16px;font-family:var(--f-zh);font-size:15px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.bot{align-self:flex-start;background:#2E2E2E}
+.msg.me{align-self:flex-end;background:var(--yolk);color:var(--ink);font-weight:500}
+.msg.me b{font-weight:900;margin-right:4px}
+.msg.sys{align-self:center;max-width:100%;background:none;color:#BDB6A8;font-size:12px;text-align:center;padding:2px 8px}
+.msg.typing{color:#BDB6A8}
+.chips-row{display:flex;gap:6px;flex-wrap:wrap}
+.chips-row button{background:none;border:1px solid #555;color:var(--cream);border-radius:999px;padding:4px 10px;font-family:var(--f-zh);font-size:13px;cursor:pointer}
+.chips-row button:hover,.chips-row button:focus-visible{border-color:var(--yolk);color:var(--yolk);outline:none}
+.chat-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:12px 14px 14px;border-top:1px solid #3A3A3A}
+.chat-form textarea{resize:none;height:46px;max-height:120px;background:#262626;color:var(--cream);border:1px solid #444;border-radius:14px;padding:11px 14px;font-family:var(--f-zh);font-size:15px;line-height:1.4}
+.chat-form textarea:focus{outline:2px solid var(--yolk);outline-offset:0;border-color:transparent}
+.chat-form button{background:var(--yolk);color:var(--ink);border:0;border-radius:14px;padding:0 16px;font-family:var(--f-zh);font-weight:900;font-size:15px;cursor:pointer}
+.chat-form button:disabled{opacity:.45;cursor:not-allowed}
+.chat-meta{grid-column:1 / -1;display:flex;justify-content:space-between;font-family:var(--f-zh);font-size:11px;color:#9A9384}
+@media (max-width:640px){
+  .chat{right:0;left:0;bottom:0;width:100%;height:calc(100% - env(safe-area-inset-top,0px) - 56px);border-radius:22px 22px 0 0;box-shadow:none;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .chat-fab span.txt{display:none}
+  .chat-fab{padding:6px}
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width:980px){
   .manifesto,.feature,.synopsis{grid-template-columns:minmax(0,1fr)}
@@ -338,7 +375,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
   .rules{transform:none}
   footer .wrap{grid-template-columns:minmax(0,1fr)}
 }
-@media (prefers-reduced-motion:reduce){.door,.poster,.mposter,.poster .role,.mark img{transition:none}}
+@media (prefers-reduced-motion:reduce){.door,.poster,.mposter,.poster .role,.mark img,.chat-fab{transition:none}}
 </style>
 
 <header class="bar">
@@ -489,6 +526,24 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
   <div class="dlg-bar"><span class="label" id="dlgTitle">FILE</span><button class="dlg-close" id="dlgClose" type="button">CLOSE ✕</button></div>
   <div class="dlg-body" id="dlgBody"></div>
 </dialog>
+
+<button class="chat-fab" id="chatFab" type="button" aria-expanded="false" aria-controls="chatBox">
+  <img src="img/badge.png" alt="" width="304" height="304"><span class="txt">問雞婆 GPT</span><span class="dot" aria-hidden="true"></span>
+</button>
+<section class="chat" id="chatBox" role="dialog" aria-label="雞婆 GPT 聊天視窗" hidden>
+  <header class="chat-head">
+    <span class="av"><img src="img/badge.png" alt="" width="304" height="304"></span>
+    <div><b>雞婆 GPT</b><small>CHICKEN GANG INTELLIGENCE</small></div>
+    <span class="status" id="chatStatus">ONLINE</span>
+    <button class="chat-x" id="chatClose" type="button" aria-label="關閉聊天視窗">✕</button>
+  </header>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <form class="chat-form" id="chatForm">
+    <textarea id="chatInput" rows="1" maxlength="300" placeholder="輸入訊息……" aria-label="輸入要問雞婆 GPT 的訊息"></textarea>
+    <button type="submit" id="chatSend">送出</button>
+    <div class="chat-meta"><span id="chatQuota"></span><span>Enter 送出・Shift+Enter 換行</span></div>
+  </form>
+</section>
 
 <script>
 const TBD = null;
@@ -800,6 +855,92 @@ document.getElementById("dlgClose").addEventListener("click", () => dlg.close())
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
 dlg.addEventListener("close", () => { lastFocus?.focus?.(); });
 
+/* --- 雞婆 GPT chat widget --- */
+// Backend: the chicken-chat function. Fill in endpoint (and the public anon key if the function needs one).
+const CHAT_CONFIG = {
+  endpoint: "https://kckqavkvzobnsvetjhdc.supabase.co/functions/v1/chicken-chat",
+  anonKey: "sb_publishable_4FPUazcCnrrbotp_jNb5vQ_o2ZB1JVK", // Supabase publishable key (safe to publish)
+  liveHosts: ["willleester.github.io"],                       // chicken-chat only allows these origins (CORS)
+  dailyLimit: 20,        // per browser per day; the real limit must live on the server
+  cooldownMs: 4000,      // minimum gap between messages
+  maxLen: 300
+};
+const chat = {
+  fab: document.getElementById("chatFab"), box: document.getElementById("chatBox"), log: document.getElementById("chatLog"),
+  form: document.getElementById("chatForm"), input: document.getElementById("chatInput"), send: document.getElementById("chatSend"),
+  quota: document.getElementById("chatQuota"), status: document.getElementById("chatStatus"),
+  history: [], busy: false, last: 0, started: false
+};
+const chatLive = () => Boolean(CHAT_CONFIG.endpoint) && CHAT_CONFIG.liveHosts.includes(location.hostname);
+const QKEY = "chickenChatQuota";
+function quotaGet() {
+  const day = new Date().toISOString().slice(0, 10);
+  try { const q = JSON.parse(localStorage.getItem(QKEY) || "{}"); return q.day === day ? q : { day, n: 0 }; } catch { return { day, n: 0 }; }
+}
+function quotaUse() { const q = quotaGet(); q.n++; try { localStorage.setItem(QKEY, JSON.stringify(q)); } catch {} return q; }
+function quotaShow() { const left = Math.max(0, CHAT_CONFIG.dailyLimit - quotaGet().n); chat.quota.textContent = `今天還可以問 ${left} 次`; return left; }
+function addMsg(kind, text) {
+  const d = document.createElement("div");
+  d.className = "msg " + kind;
+  if (kind === "me") { const b = document.createElement("b"); b.textContent = "幫友："; d.append(b, text); } else d.textContent = text;
+  chat.log.appendChild(d); chat.log.scrollTop = chat.log.scrollHeight;
+  return d;
+}
+function addChips(list) {
+  const row = document.createElement("div"); row.className = "chips-row";
+  list.forEach(q => { const b = document.createElement("button"); b.type = "button"; b.textContent = q; b.addEventListener("click", () => { row.remove(); ask(q); }); row.appendChild(b); });
+  chat.log.appendChild(row);
+}
+function openChat() {
+  chat.box.hidden = false; chat.fab.setAttribute("aria-expanded", "true");
+  if (!chat.started) {
+    chat.started = true;
+    if (!chatLive()) { chat.status.textContent = "正式網站限定"; chat.status.classList.add("off"); }
+    addMsg("bot", "哈囉哈囉！我是雞婆 GPT，雞幫的超級小雞助理！\n想知道雞幫大小事？還是有什麼餿主意？儘管問！");
+    addChips(["雞幫最近有什麼活動？", "這個月爐主是誰？", "KC 的虎爺有用嗎？"]);
+  }
+  quotaShow();
+  chat.input.focus();
+}
+function closeChat() { chat.box.hidden = true; chat.fab.setAttribute("aria-expanded", "false"); chat.fab.focus(); }
+chat.fab.addEventListener("click", () => chat.box.hidden ? openChat() : closeChat());
+document.getElementById("chatClose").addEventListener("click", closeChat);
+chat.box.addEventListener("keydown", e => { if (e.key === "Escape") closeChat(); });
+chat.input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); chat.form.requestSubmit(); } });
+chat.form.addEventListener("submit", e => { e.preventDefault(); ask(chat.input.value); });
+
+async function ask(raw) {
+  const text = raw.trim().slice(0, CHAT_CONFIG.maxLen);
+  if (!text || chat.busy) return;
+  const wait = CHAT_CONFIG.cooldownMs - (Date.now() - chat.last);
+  if (wait > 0) { addMsg("sys", `雞婆喘口氣，${Math.ceil(wait / 1000)} 秒後再問～`); return; }
+  if (quotaShow() <= 0) { addMsg("sys", "今天的提問次數用完了，明天再來找雞婆聊！"); return; }
+  chat.input.value = "";
+  addMsg("me", text);
+  chat.last = Date.now(); chat.busy = true; chat.send.disabled = true;
+  const typing = addMsg("bot typing", "雞婆翻情報庫中……");
+  let reply;
+  try { reply = await callChickenChat(text); quotaUse(); }
+  catch (err) { reply = err.userMessage || "雞婆剛剛斷線了，等一下再試試看。"; }
+  typing.remove();
+  addMsg("bot", reply);
+  chat.history.push({ role: "user", content: text }, { role: "assistant", content: reply });
+  chat.history = chat.history.slice(-10);
+  chat.busy = false; chat.send.disabled = false; quotaShow(); chat.input.focus();
+}
+async function callChickenChat(text) {
+  if (!chatLive()) {
+    const e = new Error("not live"); e.userMessage = "雞婆只在雞幫正式網站上班喔！到 willleester.github.io/chicken-gang 就能跟我聊天。"; throw e;
+  }
+  const headers = { "Content-Type": "application/json" };
+  if (CHAT_CONFIG.anonKey) headers.apikey = CHAT_CONFIG.anonKey;
+  const res = await fetch(CHAT_CONFIG.endpoint, { method: "POST", headers, body: JSON.stringify({ message: text, history: chat.history }) });
+  if (res.status === 429) { const e = new Error("limited"); e.userMessage = "雞婆今天被問太多次了，晚點再來～"; throw e; }
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const data = await res.json();
+  return data.reply || data.message || data.answer || "（雞婆一時語塞）";
+}
+
 /* --- Easter eggs --- */
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let toastTimer;
@@ -836,6 +977,7 @@ document.getElementById("egg").addEventListener("click", () => {
 // Hidden: type "13" anywhere (outside inputs) to deal the whole crew a round of applause
 let keys = "";
 document.addEventListener("keydown", e => {
+  if (e.target.closest?.("textarea, input")) return;
   keys = (keys + e.key).slice(-2);
   if (keys === "13") { toast("13 王牌全員到齊。"); rain("🃏", 13); }
 });
