@@ -535,7 +535,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
     <span class="av"><img src="img/badge.png" alt="" width="304" height="304"></span>
     <div><b>雞婆 GPT</b><small>CHICKEN GANG INTELLIGENCE</small></div>
     <span class="status" id="chatStatus">ONLINE</span>
-    <button class="chat-x" id="chatClose" type="button" aria-label="關閉聊天視窗">✕</button>
+    <button class="chat-x" id="chatClose" type="button" aria-label="縮小聊天視窗，對話會保留" title="縮小（對話會保留）">－</button>
   </header>
   <div class="chat-log" id="chatLog" aria-live="polite"></div>
   <form class="chat-form" id="chatForm">
@@ -866,7 +866,7 @@ const CHAT_CONFIG = {
   maxLen: 300
 };
 const chat = {
-  fab: document.getElementById("chatFab"), box: document.getElementById("chatBox"), log: document.getElementById("chatLog"),
+  fab: document.getElementById("chatFab"), fabTxt: document.querySelector("#chatFab .txt"), box: document.getElementById("chatBox"), log: document.getElementById("chatLog"),
   form: document.getElementById("chatForm"), input: document.getElementById("chatInput"), send: document.getElementById("chatSend"),
   quota: document.getElementById("chatQuota"), status: document.getElementById("chatStatus"),
   history: [], busy: false, last: 0, started: false
@@ -892,7 +892,7 @@ function addChips(list) {
   chat.log.appendChild(row);
 }
 function openChat() {
-  chat.box.hidden = false; chat.fab.setAttribute("aria-expanded", "true");
+  chat.box.hidden = false; chat.fab.setAttribute("aria-expanded", "true"); chat.fabTxt.textContent = "收起雞婆";
   if (!chat.started) {
     chat.started = true;
     if (!chatLive()) { chat.status.textContent = "正式網站限定"; chat.status.classList.add("off"); }
@@ -902,7 +902,14 @@ function openChat() {
   quotaShow();
   chat.input.focus();
 }
-function closeChat() { chat.box.hidden = true; chat.fab.setAttribute("aria-expanded", "false"); chat.fab.focus(); }
+function closeChat(refocus = true) {
+  chat.box.hidden = true; chat.fab.setAttribute("aria-expanded", "false"); chat.fabTxt.textContent = "問雞婆 GPT";
+  if (refocus) chat.fab.focus();
+}
+// Tapping anywhere outside the panel (and not on the button) also tucks it away
+document.addEventListener("pointerdown", e => {
+  if (!chat.box.hidden && !chat.box.contains(e.target) && !chat.fab.contains(e.target)) closeChat(false);
+});
 chat.fab.addEventListener("click", () => chat.box.hidden ? openChat() : closeChat());
 document.getElementById("chatClose").addEventListener("click", closeChat);
 chat.box.addEventListener("keydown", e => { if (e.key === "Escape") closeChat(); });
