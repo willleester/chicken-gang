@@ -279,8 +279,16 @@ dialog::backdrop{background:rgba(23,23,23,.72)}
 .item .ph{aspect-ratio:1/1;display:grid;place-items:center;border-bottom:var(--rule);background:repeating-linear-gradient(45deg,var(--cream) 0 10px,#EDE6D8 10px 20px);position:relative}
 .item .ph b{font-family:var(--f-head);font-weight:400;font-size:clamp(28px,3vw,40px);text-align:center;line-height:.95}
 .item .ph .ph-note{position:absolute;left:10px;top:10px}
-.item .b{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.item .b{padding:12px 14px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
 .item .b span{font-family:var(--f-zh);font-weight:700}
+.item.real{grid-column:span 2;background:var(--ink);color:var(--cream)}
+.item.real .shot{position:relative;border-bottom:var(--rule);border-color:var(--cream)}
+.item.real .shot img{width:100%;height:auto;aspect-ratio:2/1;object-fit:cover}
+.item.real .made{position:absolute;right:12px;top:12px;background:var(--lime);color:var(--ink);font-family:var(--f-head);font-size:20px;padding:2px 10px;border:2px solid var(--ink);transform:rotate(4deg)}
+.item.real .b{display:block;padding:14px 16px 16px}
+.item.real .no{font-family:var(--f-en);font-weight:700;font-size:12px;letter-spacing:.16em;color:var(--yolk)}
+.item.real h3{font-family:var(--f-zh);font-weight:900;font-size:24px;margin:2px 0 6px}
+.item.real p{font-family:var(--f-zh);font-size:15px;color:#E9E3D6}
 
 /* ---------- Footer + eggs ---------- */
 footer{margin-top:104px;background:var(--ink);color:var(--cream)}
@@ -461,7 +469,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
     <div class="sec-head">
       <span class="no">06</span>
       <h2>Merch<small>雞幫周邊</small></h2>
-      <p>版型先做好，等有周邊再上架。以下品項都是示意，不是真的商品。</p>
+      <p>雞幫的紀念品。Frank 公仔是第一件真的做出來的，其他標「示意」的還在想像階段。</p>
     </div>
     <div class="merch" id="merchList"></div>
   </section>
@@ -597,10 +605,11 @@ const DATA = {
     { ym: "2027-04", who: ["Fiona"] }, { ym: "2027-05", who: ["洪龍"] }, { ym: "2027-06", who: ["Will"] }
   ],
   merch: [
+    { name: "Frank 公仔", real: true, img: "merch_frank.jpg", no: "No. 001",
+      desc: "雞幫紀念品第一號。照著 Frank 本人做的 Q 版公仔，連白色立領襯衫都一模一樣。本尊在後面站好，公仔在前面搶鏡。",
+      alt: "Frank 站在辦公桌後，旁邊的人手上托著 Frank 的 Q 版公仔" },
     { name: "SERIOUSLY UNSERIOUS 帽 T", art: "SERIOUSLY<br>UNSERIOUS" },
-    { name: "雞幫幫規托特包", art: "HOUSE<br>RULES" },
-    { name: "13 王牌撲克牌", art: "13<br>ACES" },
-    { name: "東京遠征布條", art: "雞幫<br>在場" }
+    { name: "13 王牌撲克牌", art: "13<br>ACES" }
   ]
 };
 
@@ -761,7 +770,10 @@ nx.innerHTML = `<img src="img/${esc(soon[0].m.photo)}" alt="${esc(soon[0].m.name
   <div class="count">${soon[0].days === 0 ? "TODAY" : soon[0].days}<small>${soon[0].days === 0 ? "生日快樂" : `DAYS TO ${fmtBirthday(soon[0].m.birthday)}`}</small></div>`;
 
 /* --- Merch placeholders --- */
-document.getElementById("merchList").innerHTML = DATA.merch.map(p => `
+document.getElementById("merchList").innerHTML = DATA.merch.map(p => p.real ? `
+  <article class="item real">
+    <div class="shot"><img src="img/${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy" width="1200" height="600"><span class="made">MADE ✓</span></div>
+    <div class="b"><div><span class="no">${esc(p.no)}</span><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p></div></div></article>` : `
   <article class="item"><div class="ph"><span class="ph-note">示意</span><b>${p.art}</b></div>
     <div class="b"><span>${esc(p.name)}</span><span class="soon">SOON</span></div></article>`).join("");
 
