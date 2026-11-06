@@ -223,6 +223,8 @@ dialog::backdrop{background:rgba(23,23,23,.72)}
 
 /* ---------- Missions: movie posters ---------- */
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.latest{border:var(--rule);background:var(--paper);padding:20px;margin-bottom:28px;position:relative;box-shadow:8px 8px 0 var(--yolk)}
+.latest::before{content:"LATEST RELEASE 最新上映";position:absolute;top:-14px;left:16px;background:var(--blood);color:var(--cream);font-family:var(--f-head);font-size:16px;letter-spacing:.06em;padding:1px 10px;border:2px solid var(--ink)}
 .mposter{--accent:var(--blood);position:relative;display:block;width:100%;aspect-ratio:2/3;max-width:100%;padding:0;text-align:left;border:var(--rule);background:var(--ink);color:var(--cream);overflow:hidden;isolation:isolate;container-type:inline-size;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
 .mposter:hover,.mposter:focus-visible{transform:translate(-4px,-4px) rotate(.6deg);box-shadow:8px 8px 0 var(--accent);outline:none}
 .mposter img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.3) brightness(.9);z-index:-2}
@@ -244,9 +246,10 @@ dialog::backdrop{background:rgba(23,23,23,.72)}
 .cast{display:flex;flex-wrap:wrap;gap:6px}
 .cast span{font-family:var(--f-zh);font-weight:700;font-size:14px;border:2px solid var(--ink);padding:1px 10px;background:var(--paper)}
 .cast span.guest{background:var(--lime)}
-.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;align-items:start}
 .album figure{margin:0}
-.album img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border:2px solid var(--ink)}
+/* Whole photo, never cropped: every person stays head to toe */
+.album img{width:100%;height:auto;border:2px solid var(--ink)}
 .album figcaption{font-family:var(--f-zh);font-size:12px;color:var(--ink-60);margin-top:4px}
 
 /* ---------- Calendar: hosts & birthdays ---------- */
@@ -500,6 +503,7 @@ footer small{font-family:var(--f-zh);color:#BDB6A8;font-size:12px}
       <h2>Missions<small>雞幫出任務</small></h2>
       <p>每一場聚會都是一部電影。點海報看劇情簡介、相簿和演出名單。</p>
     </div>
+    <div class="latest" id="latest"></div>
     <div class="mgrid" id="mgrid"></div>
   </section>
 
@@ -616,7 +620,7 @@ const DATA = {
       items: ["晶華台灣小吃歡送趴，每人認領一道菜。", "雞幫 13 人公仔誕生。", "第三次宜蘭小旅行，第二次聖誕交換禮物。"], pull: "沒有累積，只有奇蹟。",
       cover: { src: "landlady.jpg", cap: "包租婆系列" }, side: { src: "thesis.jpg", cap: "寫完論文" } },
     { year: "2026", title: "五週年，雞幫報到", dek: "東京巨蛋看經典賽、第三座季軍獎盃、五週年影片上線。",
-      items: ["1/10 班聚 @ 晶華軒，早上先打一場球。", "6 月 EMBA 畢業典禮，以雞幫名義送花給學妹。", "9 月中秋 E 卡，10 月五週年影片。"], pull: "雞幫的聚餐、嘴砲和友情，是沒有畢業證書的必修課！",
+      items: ["1/10 班聚 @ 晶華軒，早上先打一場球。", "6 月 EMBA 畢業典禮，以雞幫名義送花給學妹。", "9 月中秋 E 卡，10 月五週年影片。", "11/6 Jackie、文文、Fiona、Grace 四位女神朝聖寶麗廣塲 Dior 七米薑餅聖誕樹快閃。"], pull: "雞幫的聚餐、嘴砲和友情，是沒有畢業證書的必修課！",
       cover: { src: "reunion.jpg", cap: "2026/1/10 110A 班聚 @ 晶華軒" }, side: { src: "trophy.jpg", cap: "第三座季軍獎盃" } }
   ],
   missions: [
@@ -651,7 +655,11 @@ const DATA = {
       album: [{ src: "tokyo.jpg", cap: "幫中華隊加油" }] },
     { title: "Miracles Only", zh: "第三座季軍獎盃", year: "2026", accent: 1, tag: "只有奇蹟，沒有累積。",
       synopsis: "壘球大聯盟竟然進了前四強，拿下雞幫的第三座季軍獎盃。再次證明：只有奇蹟，沒有累積。",
-      cast: TBD, album: [{ src: "trophy.jpg", cap: "第三座季軍獎盃" }, { src: "ball26.jpg", cap: "賽後合照" }] }
+      cast: TBD, album: [{ src: "trophy.jpg", cap: "第三座季軍獎盃" }, { src: "ball26.jpg", cap: "賽後合照" }] },
+    { title: "Gingerbread Dreams", zh: "Dior 七米薑餅聖誕樹", year: "2026.11.06", accent: 0, tag: "四位女神，一棵七米薑餅樹。",
+      synopsis: "2026 年 11 月 6 日，雞幫四位女神 Jackie、文文、Fiona、Grace 全員出動，朝聖寶麗廣塲的 Dior 七米薑餅聖誕樹快閃樂園。先在整棵薑餅樹前拍一輪，再到快閃咖啡座喝香檳、吃甜點，最後和一排白衣型男比手勢合照。時尚擔當，名不虛傳。",
+      cast: ["Jackie", "文文", "Fiona", "Grace"],
+      album: [{ src: "dior1.jpg", cap: "四位女神與七米薑餅聖誕樹" }, { src: "dior2.jpg", cap: "快閃咖啡座，香檳配甜點" }, { src: "dior3.jpg", cap: "和白衣型男一起比手勢" }, { src: "dior4.jpg", cap: "薑餅樹前全員合照" }] }
   ],
   friends: [
     { name: "詠晴", role: "時尚女神", photo: "f01.jpg", alt: "詠晴的 EMBA 畢業照",
@@ -783,13 +791,16 @@ function missionPosterHTML(x, i, tag) {
       </span>
     </${tag}>`;
 }
-document.getElementById("mgrid").innerHTML = DATA.missions.map((x, i) => missionPosterHTML(x, i, "button")).join("");
+// The newest mission is shown open as "LATEST RELEASE"; the rest go in the poster grid
+const latestIdx = DATA.missions.length - 1;
+document.getElementById("mgrid").innerHTML = DATA.missions.map((x, i) => i === latestIdx ? "" : missionPosterHTML(x, i, "button")).join("");
+document.getElementById("latest").innerHTML = missionHTML(latestIdx);
 
 function missionHTML(i) {
   const x = DATA.missions[i];
   const cast = x.cast
     ? x.cast.map(c => `<span>${esc(c)}</span>`).join("") + (x.guests || []).map(g => `<span class="guest">${esc(g)}（客串）</span>`).join("")
-    : tbd;
+    : x.castNote ? `<span>${esc(x.castNote)}</span>` : tbd;
   return `<div class="synopsis">
       ${missionPosterHTML(x, i, "div")}
       <div class="syn">
@@ -798,7 +809,7 @@ function missionHTML(i) {
         <p>${esc(x.synopsis)}</p>
         <div><div class="label" style="margin-bottom:6px">Cast 演出名單</div><div class="cast">${cast}</div></div>
         <div><div class="label" style="margin-bottom:6px">Album 相簿</div>
-          <div class="album">${x.album.map(p => `<figure><img src="img/${p.src}" alt="${esc(p.cap)}" loading="lazy" width="854" height="480"><figcaption>${esc(p.cap)}</figcaption></figure>`).join("")}</div>
+          <div class="album">${x.album.map(p => `<figure><img src="img/${p.src}" alt="${esc(p.cap)}" loading="lazy"><figcaption>${esc(p.cap)}</figcaption></figure>`).join("")}</div>
         </div>
       </div>
     </div>`;
